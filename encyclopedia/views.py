@@ -53,10 +53,14 @@ def article(request, title):
     # text and change the markdown to HTML to display on the page
     if get_entry is not None:
         # Regex for h1
-        entryFormat = re.sub(r"## +(\w+)", r"<h2>\1</h2>", get_entry)
-        # Regex for h2
-        entryFormat = re.sub(r"# +(\w+)", r"<h1>\1</h1>", entryFormat)
+        entryFormat = re.sub(r"(?<!#)#\ (.+)\n", r"<h1>\1</h1>", get_entry)
+        entryFormat = re.sub(r"(?<!#)##\ (.+)\n", r"<h2>\1</h2>", entryFormat)
+        entryFormat = re.sub(r"(?<!#)###\ (.+)\n", r"<h3>\1</h3>", entryFormat)
+        entryFormat = re.sub(r"(?<!#)####\ (.+)\n", r"<h4>\1</h4>", entryFormat)
+        entryFormat = re.sub(r"(?<!#)#####\ (.+)\n", r"<h5>\1</h5>", entryFormat)
+        entryFormat = re.sub(r"(?<!#)######\ (.+)\n", r"<h6>\1</h6>", entryFormat)
         # Regex for p tag
+        entryFormat = re.sub(r"^(\w.*)", r"<p>\1</p>", entryFormat)
         entryFormat = re.sub(r"\n(\w.*)", r"<p>\1</p>", entryFormat)
         # Regex for a tag
         entryFormat = re.sub(r"\[(\w*)\]\((.[^)]+)\)", r"<a href=\2>\1</a>", entryFormat)
