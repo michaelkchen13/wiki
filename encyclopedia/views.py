@@ -153,7 +153,6 @@ def edit(request, editTitle):
     if request.method == "POST":
         editForm = request.POST
         editedContent = editForm.get('editedContent')
-        print(editedContent)
         util.save_entry(editTitle, editedContent)
         return HttpResponseRedirect("/wiki/" + editTitle)
 
